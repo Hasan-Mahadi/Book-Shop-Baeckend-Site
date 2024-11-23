@@ -1,29 +1,41 @@
 import { model, Schema } from "mongoose";
+import { TProduct } from "./product.interface";
 
-const productSchema = new Schema({
+const productSchema = new Schema<TProduct>({
 
     title: {
         type: String,
-        required: true,
+        required: [true, "please give title"],
     },  //The title of the book.
 
-    author: String,  //The author of the book.
+    author:{
+        type:String, 
+         required: [true, "please give author"],
+
+    } , //The author of the book.
 
     price: {
         type:Number,
-        required: true,
+        required: [true, "please give price number"],
     },     // Price of the book.
 
-    category:{
-     type: String,
-     enum: " Fiction |  Science | SelfDevelopment  | Poetry | Religious ",
-    },            //The genre or category of the book.
+
+
+   category: {
+    type: String,
+    enum:{ values: ['Fiction', 'Science', 'SelfDevelopment', 'Poetry', 'Religious'], message:'{VALUE} is not right plz provide exact value'}, // Enum validation
+    required: [true, "please give category"], // Ensures category is always provided
+  },
+  
+  
+     //The genre or category of the book.
+
 
      description: String,   // A brief description of the book.
 
      quantity:{
         type: Number,
-         required: true,
+         required: [true, "please give quantity number"],
      },    //Quantity of the book available.
 
      inStock: Boolean    //Indicates if the book is in stock.
@@ -32,5 +44,5 @@ const productSchema = new Schema({
 
 })
 
-  const Product = model('Product', productSchema)
+  const Product = model<TProduct>('Product', productSchema)
   export default Product;
