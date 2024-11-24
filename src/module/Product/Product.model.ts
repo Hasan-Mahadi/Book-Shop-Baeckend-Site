@@ -36,9 +36,18 @@ const productSchema = new Schema<TProduct>({
      quantity:{
         type: Number,
          required: [true, "please give quantity number"],
+        
      },    //Quantity of the book available.
 
-     inStock: Boolean    //Indicates if the book is in stock.
+     inStock: Boolean ,  //Indicates if the book is in stock.
+     createdAt : { type: Date, default: Date.now },
+     updatedAt : { type: Date, default: Date.now },
+
+  
+      
+      
+      
+    
 
 
 
