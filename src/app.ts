@@ -106,21 +106,6 @@ app.post('/api/orders', async (req: Request, res:Response)=>{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.get('/', (req: Request, res: Response) => {
   res.send({
     status: true,
