@@ -23,12 +23,18 @@ const orderSchema = new Schema<TOrder>({
     totalPrice: Number, // Price of the book
     quantity: Number, // Quantity ordered
   },
-
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-
   totalPrice: Number,
-});
+
+  // createdAt: { type: Date, default: Date.now },
+  // updatedAt: { type: Date, default: Date.now },
+
+  
+},{
+  timestamps:true
+}
+
+
+);
 
 const Order = model<TOrder>('Order', orderSchema);
 

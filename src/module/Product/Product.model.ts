@@ -37,9 +37,14 @@ const productSchema = new Schema<TProduct>({
 
   inStock: Boolean, //Indicates if the book is in stock.
 
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-});
+  // createdAt: { type: Date, default: Date.now },
+  // updatedAt: { type: Date, default: Date.now },
+},
+{
+  timestamps: true
+}
+
+);
 
 const Product = model<TProduct>('Product', productSchema);
 export default Product;

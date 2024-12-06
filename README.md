@@ -68,8 +68,10 @@ I Develop an Express application with TypeScript, integrating MongoDB with Mongo
 **Validation:** Mongoose schema validation
 **Error Handling:** Custom middleware
 
-6.  Endpoints: | POST, GET, GET, PUT, DELETE |.
+6. {timestamps: true}
 
-7.  Access the API at http://localhost:5000.
+7.  Endpoints: | POST, GET, GET, PUT, DELETE |.
 
-8. https://book-shop-assignment-2.vercel.app/
+8.  Access the API at http://localhost:5000.
+
+9.  https://book-shop-assignment-2.vercel.app/

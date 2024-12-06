@@ -59,7 +59,7 @@ app.get('/api/orders/revenue', async (req, res) => {
 
 // Place Order Endpoint
 app.post('/api/orders', async (req: Request, res: Response) => {
-  const { email, product, quantity, totalPrice } = req.body
+  const { email, product, quantity, totalPrice } = req.body;
 
   // Validate input
   if (!email || !product || !quantity || !totalPrice) {
