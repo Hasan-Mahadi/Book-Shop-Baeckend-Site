@@ -3,9 +3,14 @@ import cors from 'cors';
 import productrouter from './module/Product/product.router';
 import orderRouter from './module/Order/order.router';
 import Order from './module/Order/order.model';
-import Product from './module/Product/Product.model';
 
-const app: Application = express();
+
+
+
+
+const app:Application = express();
+
+
 // const port = 3000
 
 //parsers
@@ -52,46 +57,61 @@ app.get('/api/orders/revenue', async (req, res) => {
     res.status(500).json({
       message: 'Failed to calculate revenue',
       status: false,
-      error: error.message,
+      error: (error as Error).message,
     });
   }
 });
 
 // Place Order Endpoint
-app.post('/api/orders', async (req: Request, res: Response) => {
-  const { email, product, quantity, totalPrice } = req.body;
 
-  // Validate input
-  if (!email || !product || !quantity || !totalPrice) {
-    return res.status(400).json({ error: 'Missing required fields.' });
-  }
-
-  try {
+// app.post('/api/orders', async (req: Request, res: Response)=> {
+  // try {
+    // const { email, product, quantity, totalPrice } = req.body;
+// 
+    // Validate input
+    // if (!email || !product || !quantity || !totalPrice) {
+      // return res.status(400).json({ error: 'Missing required fields.' });
+    // }
+// 
     // Fetch product from database
-    const productDoc = await Product.findById(product);
-
-    if (!productDoc) {
-      return res.status(404).json({ error: 'Product not found.' });
-    }
-
+    // const productDoc = await Product.findById(product);
+    // if (!productDoc) {
+      // return res.status(404).json({ error: 'Product not found.' });
+    // }
+// 
     // Check stock availability
-    if (productDoc.quantity < quantity) {
-      return res.status(400).json({ error: 'Insufficient stock available.' });
-    }
-
+    // if (productDoc.quantity < quantity) {
+      // return res.status(400).json({ error: 'Insufficient stock available.' });
+    // }
+// 
     // Update inventory
-    productDoc.quantity -= quantity;
-    if (productDoc.quantity === 0) {
-      productDoc.inStock = false;
-    }
-    await productDoc.save();
-  } catch (error) {
-    console.error(error);
-    return res
-      .status(500)
-      .json({ error: 'An error occurred while processing your order.' });
-  }
-});
+    // productDoc.quantity -= quantity;
+    // if (productDoc.quantity === 0) {
+      // productDoc.inStock = false;
+    // }
+    // await productDoc.save();
+// 
+    // Create new order
+    // const newOrder = new Order({
+      // email,
+      // items: [{ product, quantity, totalPrice }],
+    // });
+// 
+    // await newOrder.save();
+// 
+    // return res.status(201).json({
+      // message: 'Order placed successfully',
+      // order: newOrder,
+    // });
+  // } catch (error) {
+    // console.error('Error placing order:', error);
+    // return res.status(500).json({
+      // error: 'An error occurred while processing your order.',
+    // });
+  // }
+// });
+// 
+// 
 
 app.get('/', (req: Request, res: Response) => {
   res.send({

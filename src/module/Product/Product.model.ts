@@ -25,6 +25,7 @@ const productSchema = new Schema<TProduct>({
     }, // Enum validation
     required: [true, 'please give category'], // Ensures category is always provided
   },
+  // error:String,
 
   //The genre or category of the book.
 
