@@ -18,7 +18,10 @@ const createBook = async (req: Request, res: Response) => {
     res.json({
       status: false,
       message: 'Something went wrong',
-      stack: process.env.NODE_ENV === 'development' ? (error as Error).stack : undefined,
+      stack:
+        process.env.NODE_ENV === 'development'
+          ? (error as Error).stack
+          : undefined,
       error,
     });
   }
@@ -38,7 +41,8 @@ const getBook = async (req: Request, res: Response) => {
     res.json({
       status: false,
       message: 'Something went wrong',
-      stack: process.env.NODE_ENV === 'development' ? (error as Error) : undefined,
+      stack:
+        process.env.NODE_ENV === 'development' ? (error as Error) : undefined,
       error,
     });
   }
@@ -60,7 +64,8 @@ const getSingleBook = async (req: Request, res: Response) => {
     res.json({
       status: false,
       message: 'Something went wrong',
-      stack: process.env.NODE_ENV === 'development' ? (error as Error): undefined,
+      stack:
+        process.env.NODE_ENV === 'development' ? (error as Error) : undefined,
       error,
     });
   }
@@ -83,7 +88,8 @@ const UpdateBook = async (req: Request, res: Response) => {
     res.json({
       status: false,
       message: 'Something went wrong',
-      stack: process.env.NODE_ENV === 'development' ? (error as Error) : undefined,
+      stack:
+        process.env.NODE_ENV === 'development' ? (error as Error) : undefined,
       error,
     });
   }
@@ -105,7 +111,8 @@ const DeleteBook = async (req: Request, res: Response) => {
     res.json({
       status: false,
       message: 'Something went wrong',
-      stack: process.env.NODE_ENV === 'development' ? (error as Error) : undefined,
+      stack:
+        process.env.NODE_ENV === 'development' ? (error as Error) : undefined,
       error,
     });
   }

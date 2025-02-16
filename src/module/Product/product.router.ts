@@ -11,7 +11,6 @@ productrouter.get('/', productController.getBook);
 
 export default productrouter;
 
-
 /**productrouter.post('/create-book', productController.createBook);
 productrouter.get('/:bookId', productController.getSingleBook);
 productrouter.put('/:bookId', productController.UpdateBook);

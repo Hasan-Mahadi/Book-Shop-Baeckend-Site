@@ -70,8 +70,8 @@ I Develop an Express application with TypeScript, integrating MongoDB with Mongo
 
 6. {timestamps: true}
 
-7.  Endpoints: | POST, GET, GET, PUT, DELETE |.
+7. Endpoints: | POST, GET, GET, PUT, DELETE |.
 
-8.  Access the API at http://localhost:5000.
+8. Access the API at http://localhost:5000.
 
-9.  https://book-shop-assignment-2.vercel.app/
+9. https://book-shop-assignment-2.vercel.app/

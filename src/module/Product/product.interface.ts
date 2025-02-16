@@ -1,7 +1,12 @@
 export interface TProduct {
   title: string;
   author: string;
+  _id?: string;
+  name: string;
+  brand: string;
   price: number;
+  model: string;
+  stock: number;
   // error:string;
   category: 'Fiction' | 'Science' | 'SelfDevelopment' | 'Poetry' | 'Religious';
   description?: string | null;
