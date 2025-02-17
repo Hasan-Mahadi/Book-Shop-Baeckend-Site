@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
 import { model, Schema } from 'mongoose';
 import { TUser } from './user.interface';
-// import bcrypt from 'bcrypt';
-// import config from '../../app/config';
+import bcrypt from 'bcrypt';
+import config from '../../app/config';
 
 const userSchema = new Schema<TUser>(
   {
@@ -30,7 +31,7 @@ const userSchema = new Schema<TUser>(
     },
     role: {
       type: String,
-      enum: ['admin', 'user'],
+      enum: ['user', 'admin'],
       default: 'user',
     },
     isBlocked: {
@@ -46,22 +47,22 @@ const userSchema = new Schema<TUser>(
 
 // Hook -> pre
 
-// userSchema.pre('save', async function (next) {
-//   const user = this;
-//
-//   user.password = await bcrypt.hash(
-// user.password,
-// Number(config.bcrypt_salt_rounds),
-//   );
-//   next();
-// });
+userSchema.pre('save', async function (next) {
+  const user = this;
+
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds),
+  );
+  next();
+});
 
 // Hook -> post
 
-// userSchema.post('save', function (doc, next) {
-//   doc.password = '';
-//   next();
-// });
-
+userSchema.post('save', function (doc, next) {
+  doc.password = '';
+  next();
+});
+//
 export const User = model<TUser>('User', userSchema);
 export default User;

@@ -4,6 +4,7 @@ import productrouter from './module/Product/product.router';
 import orderRouter from './module/Order/order.router';
 import Order from './module/Order/order.model';
 import userRouter from './module/User/user.router';
+import authRoute from './module/auth/auth.router';
 
 const app: Application = express();
 
@@ -17,6 +18,7 @@ app.use(cors());
 app.use('/api/products', productrouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/user', userRouter);
+app.use('/api/auth', authRoute);
 
 // API endpoint
 app.get('/api/orders/revenue', async (req, res) => {
