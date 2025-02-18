@@ -3,6 +3,7 @@ import { User } from './user.model';
 
 // Method:POST
 const createUser = async (payload: TUser): Promise<TUser> => {
+  payload.role = 'admin';
   const result = await User.create(payload);
   return result;
 };

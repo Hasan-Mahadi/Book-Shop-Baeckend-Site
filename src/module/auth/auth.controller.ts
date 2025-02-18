@@ -6,8 +6,6 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { StatusCodes } from 'http-status-codes';
 
-
-
 //register
 
 const register = catchAsync(async (req: Request, res: Response) => {
@@ -20,8 +18,6 @@ const register = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-
-
 
 //login
 
@@ -51,9 +47,7 @@ const login = catchAsync(
   },
 );
 
-
-
 export const AuthController = {
   register,
-  login
+  login,
 };

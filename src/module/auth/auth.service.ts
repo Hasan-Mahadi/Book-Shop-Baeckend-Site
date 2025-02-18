@@ -32,16 +32,17 @@ const login = async (payload: TLoginUser) => {
   }
 
   // const jwtPayload = {
-    // email: user.email,
-    // role: user.role,
+  // email: user.email,
+  // role: user.role,
   // };
 
-   // const token = jwt.sign({ jwtPayload }, 'secret', { expiresIn: '30d' });
+  // const token = jwt.sign({ jwtPayload }, 'secret', { expiresIn: '30d' });
 
-  const token = jwt.sign({email:user?.email, role: user?.role}, "secret",{expiresIn: "30d"});
-  
-    // return { token, user };
- 
+  const token = jwt.sign({ email: user?.email, role: user?.role }, 'secret', {
+    expiresIn: '30d',
+  });
+
+  // return { token, user };
 
   const verifiedUser = {
     name: user?.name,
@@ -50,12 +51,9 @@ const login = async (payload: TLoginUser) => {
   };
 
   return { token, verifiedUser };
-
-  
 };
-
 
 export const AuthService = {
   register,
-  login
+  login,
 };
