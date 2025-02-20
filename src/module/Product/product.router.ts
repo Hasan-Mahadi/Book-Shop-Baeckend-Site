@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import { productController } from './product.controller';
+import auth from '../../middleweres/auth';
 
 const productrouter = Router();
 
-productrouter.post('/', productController.createBook);
-productrouter.get('/:bookId', productController.getSingleBook);
-productrouter.put('/:bookId', productController.UpdateBook);
-productrouter.delete('/:bookId', productController.DeleteBook);
-productrouter.get('/', productController.getBook);
+productrouter.post('/', auth('admin'), productController.createBook);
+productrouter.get('/:bookId', auth('admin'), productController.getSingleBook);
+productrouter.put('/:bookId', auth('admin'), productController.UpdateBook);
+productrouter.delete('/:bookId', auth('admin'), productController.DeleteBook);
+productrouter.get('/', auth('admin'), productController.getBook);
 
 export default productrouter;
 

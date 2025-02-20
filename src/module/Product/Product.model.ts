@@ -7,10 +7,6 @@ const productSchema = new Schema<TProduct>(
     brand: { type: String, required: true },
     model: { type: String, required: true },
     stock: { type: Number, required: true },
-    title: {
-      type: String,
-      required: [true, 'please give title'],
-    }, //The title of the book.
 
     author: {
       type: String,

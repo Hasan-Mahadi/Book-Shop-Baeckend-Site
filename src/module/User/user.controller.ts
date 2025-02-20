@@ -98,9 +98,30 @@ const getUser = async (req: Request, res: Response) => {
   }
 };
 
+//deactive-User
+
+const deactivateUser = async (req: Request, res: Response) => {
+  try {
+    const result = await userService.deactivateUsers(req.params.userId);
+
+    res.send({
+      status: true,
+      message: 'User deactivated successfully',
+      result: { result },
+    });
+  } catch (error) {
+    res.json({
+      status: false,
+      message: 'Something went wrong',
+      error,
+    });
+  }
+};
+
 export const UserController = {
   creatUser,
   getUser,
   UpdateUser,
   DeleteUser,
+  deactivateUser,
 };

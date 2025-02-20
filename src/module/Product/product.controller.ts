@@ -1,9 +1,10 @@
 // req and res manages
 import { Request, Response } from 'express';
 import { BookService } from './product.service';
+import catchAsync from '../../utils/catchAsync';
 
 //Method: POST
-const createBook = async (req: Request, res: Response) => {
+const createBook = catchAsync(async (req: Request, res: Response) => {
   try {
     const bookload = req.body;
 
@@ -25,7 +26,7 @@ const createBook = async (req: Request, res: Response) => {
       error,
     });
   }
-};
+});
 
 //Method: GET  ALL
 const getBook = async (req: Request, res: Response) => {
@@ -73,7 +74,7 @@ const getSingleBook = async (req: Request, res: Response) => {
 
 //Method: PUT
 
-const UpdateBook = async (req: Request, res: Response) => {
+const UpdateBook = catchAsync(async (req: Request, res: Response) => {
   try {
     const bookId = req.params.bookId;
     const body = req.body;
@@ -93,7 +94,7 @@ const UpdateBook = async (req: Request, res: Response) => {
       error,
     });
   }
-};
+});
 
 //Method: DELETE
 

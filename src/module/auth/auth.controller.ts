@@ -47,7 +47,21 @@ const login = catchAsync(
   },
 );
 
+//logout
+const logout = catchAsync(async (req: Request, res: Response) => {
+  res.clearCookie('token'); // Clear token from cookies if stored there
+
+  sendResponse(res, {
+    success: true,
+    message: 'Logout successful',
+    statusCode: StatusCodes.OK,
+    data: null,
+  });
+  res.redirect('/login'); // Redirect to login page
+});
+
 export const AuthController = {
   register,
   login,
+  logout,
 };

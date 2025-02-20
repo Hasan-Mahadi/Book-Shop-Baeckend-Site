@@ -32,9 +32,20 @@ const getUser = async () => {
   return result;
 };
 
+//deActive-User
+
+const deactivateUsers = async (userId: string) => {
+  return await User.findByIdAndUpdate(
+    userId,
+    { isBlocked: true },
+    { new: true },
+  );
+};
+
 export const userService = {
   createUser,
   getUser,
   UpdateBook,
   DeleteBook,
+  deactivateUsers,
 };

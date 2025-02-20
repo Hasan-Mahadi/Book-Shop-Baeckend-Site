@@ -5,7 +5,6 @@ import orderRouter from './module/Order/order.router';
 import Order from './module/Order/order.model';
 import userRouter from './module/User/user.router';
 import authRoute from './module/auth/auth.router';
-
 const app: Application = express();
 
 // const port = 3000

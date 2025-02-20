@@ -24,4 +24,6 @@ authRoute.post(
   AuthController.login,
 );
 
+authRoute.post('/logout', AuthController.logout);
+
 export default authRoute;

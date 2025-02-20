@@ -1,5 +1,4 @@
 export interface TProduct {
-  title: string;
   author: string;
   _id?: string;
   name: string;
