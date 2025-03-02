@@ -1,38 +1,61 @@
 import { Request, Response } from 'express';
 import { OrderService } from './order.service';
 import catchAsync from '../../utils/catchAsync';
+import sendResponse from '../../utils/sendResponse';
+import { StatusCodes } from 'http-status-codes';
+import { TUser } from '../User/user.interface';
 
 //post
 
-const createOrder = catchAsync(async (req: Request, res: Response) => {
-  try {
-    const body = req.body;
-    const result = await OrderService.createOrder(body);
+// const createOrder = catchAsync(async (req: Request, res: Response) => {
+// try {
+// const body = req.body;
+// const result = await OrderService.createOrder(body);
+//
+// res.json({
+// message: 'Order created successfully',
+// success: true,
+// data: result,
+// });
+// } catch (error) {
+// res.send({
+// success: false,
+// message: 'Something went worng',
+// error,
+// });
+// }
+// });
+//
 
-    res.json({
-      message: 'Order created successfully',
-      success: true,
-      data: result,
-    });
-  } catch (error) {
-    res.send({
-      success: false,
-      message: 'Something went worng',
-      error,
-    });
-  }
+const createOrder = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+
+  console.log(req.body);
+  const order = await OrderService.createOrder(
+    user as TUser,
+    req.body,
+    req.ip!,
+  
+  );
+
+  sendResponse(res, {
+    message: 'Order created successfully',
+    statusCode: StatusCodes.CREATED,
+    data: order,
+    success: true,
+  });
 });
 
 //get all
 
 const getOrder = async (req: Request, res: Response) => {
   try {
-    const result = await OrderService.getBook();
+    const order = await OrderService.getOrder();
 
     res.send({
       status: true,
       message: 'Order retrieved successfully',
-      result,
+      data: order,
     });
   } catch (error) {
     res.json({
@@ -44,6 +67,19 @@ const getOrder = async (req: Request, res: Response) => {
     });
   }
 };
+
+//payment
+
+const verifyPayment = catchAsync(async (req, res) => {
+  const order = await OrderService.verifyPayment(req.query.order_id as string);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.CREATED,
+    message: 'Order verified successfully',
+    data: order,
+    success: true,
+  });
+});
 
 //Method: GET   SINGLE
 
@@ -118,6 +154,7 @@ const DeleteOrder = async (req: Request, res: Response) => {
 export const OrderController = {
   createOrder,
   getOrder,
+  verifyPayment,
   getSingleOrder,
   UpdateOrder,
   DeleteOrder,

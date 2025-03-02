@@ -1,6 +1,4 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-
 // export type TUser = {
 // _id?: string;
 // name: string;
@@ -11,12 +9,17 @@
 // matchPassword:string
 // };
 
-export interface TUser extends Document {
-  _id?: string;
+export interface TUser {
+  // _id?: string;
   name: string;
   email: string;
+  phone?: string;
+  city?: string;
+  address?: string;
   password: string;
+  passwordConfirm: string;
   role: 'user' | 'admin';
   isBlocked: boolean;
-  matchPassword: (enteredPassword: string) => Promise<boolean>;
+  needPasswordChange: boolean;
+  isPasswordMatch: boolean;
 }

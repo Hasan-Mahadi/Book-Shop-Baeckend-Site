@@ -14,4 +14,5 @@ userRouter.patch(
   auth('admin'),
   UserController.deactivateUser,
 ); // Admin can deactivate users
+
 export default userRouter;

@@ -26,6 +26,7 @@ const auth = (...requiredRole: string[]) => {
     }
 
     req.user = decoded as JwtPayload;
+    req.user = user; //payment
 
     next();
   });

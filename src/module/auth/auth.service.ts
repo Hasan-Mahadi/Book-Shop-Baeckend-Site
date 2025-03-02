@@ -1,8 +1,9 @@
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { TUser } from '../User/user.interface';
 import User from '../User/user.model';
 import { TLoginUser } from './auth.interface';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import config from '../../config';
 
 //for register
 
@@ -53,7 +54,47 @@ const login = async (payload: TLoginUser) => {
   return { token, verifiedUser };
 };
 
+//For changePassword
+
+const changpassword = async (
+  userdata: JwtPayload,
+  payload: {
+    oldPassword: string;
+    newPassword: string;
+  },
+) => {
+  const user = await User.findOne(userdata.id).select('+password');
+
+  if (!user) {
+    throw new Error('User not found!!');
+  }
+
+  // checking if the password is correct
+  //
+  //  if(!(await User.isPasswordMatch(payload.oldPassword, user?.password)))
+  //  throw new Error('password is not Matched');
+  //
+
+  // hash new Pasword
+  const newhasdpassword = await bcrypt.hash(
+    payload.newPassword,
+    Number(config.bcrypt_salt_rounds),
+  );
+
+  await User.findOneAndUpdate(
+    {
+      id: userdata.userId,
+      role: userdata.role,
+    },
+    {
+      password: newhasdpassword,
+    },
+  );
+  return null;
+};
+
 export const AuthService = {
   register,
   login,
+  changpassword,
 };

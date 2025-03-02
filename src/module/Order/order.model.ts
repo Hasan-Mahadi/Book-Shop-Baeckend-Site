@@ -3,32 +3,43 @@ import { TOrder } from './order.interface';
 
 const orderSchema = new Schema<TOrder>(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true,
+    },
+
     products: [
       {
         product: {
-          type: mongoose.Schema.Types.ObjectId,
+          type: Schema.Types.ObjectId,
           ref: 'Product',
           required: true,
         },
-        quantity: { type: Number, required: true },
+        quantity: {
+          type: Number,
+          required: true,
+        },
       },
     ],
 
     status: {
       type: String,
-      enum: ['pending', 'completed', 'cancelled'],
-      default: 'pending',
+      enum: ['Pending', 'Paid', 'Shipped', 'Completed', 'Cancelled'],
+      default: 'Pending',
     },
-    email: {
-      type: String,
-      required: [true, 'please enter email'],
-    },
-    product: {
-      type: mongoose.Schema.Types.ObjectId,
-      //  ref: 'Product', // References the 'Product' model
-      required: true,
-    },
+
+    //
+    // email: {
+    // type: String,
+    // required: [true, 'please enter email'],
+    // },
+    // product: {
+    // type: mongoose.Schema.Types.ObjectId,
+    //  ref: 'Product', // References the 'Product' model
+    // required: true,
+    // },
 
     quantity: {
       type: Number,
@@ -41,7 +52,19 @@ const orderSchema = new Schema<TOrder>(
       totalPrice: Number, // Price of the book
       quantity: Number, // Quantity ordered
     },
-    totalPrice: Number,
+    totalPrice: {
+      type: Number,
+      required: true,
+    },
+    transaction: {
+      id: String,
+      transactionStatus: String,
+      bank_status: String,
+      sp_code: String,
+      sp_message: String,
+      method: String,
+      date_time: String,
+    },
 
     // createdAt: { type: Date, default: Date.now },
     // updatedAt: { type: Date, default: Date.now },

@@ -6,7 +6,7 @@ import config from '../../app/config';
 
 const userSchema = new Schema<TUser>(
   {
-    //    id:String,
+    //  _id:String,
 
     name: {
       type: String,
@@ -34,16 +34,31 @@ const userSchema = new Schema<TUser>(
       enum: ['user', 'admin'],
       default: 'user',
     },
+    phone: { type: String, default: 'N/A' },
+    address: { type: String, default: 'N/A' },
+    city: { type: String, default: 'N/A' },
     isBlocked: {
       type: Boolean,
       default: false,
       required: true,
+    },
+    needPasswordChange: {
+      type: Boolean,
+      default: true,
     },
   },
   {
     timestamps: true,
   },
 );
+
+//changspassword
+userSchema.statics.isPasswordMatch = async function (
+  plainTextPassword,
+  hashedPassword,
+) {
+  return await bcrypt.compare(plainTextPassword, hashedPassword);
+};
 
 // Hook -> pre
 
@@ -64,5 +79,6 @@ userSchema.post('save', function (doc, next) {
   next();
 });
 //
+
 export const User = model<TUser>('User', userSchema);
 export default User;

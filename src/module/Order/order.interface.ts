@@ -2,14 +2,24 @@ import mongoose from 'mongoose';
 import { Types } from 'mongoose';
 
 export interface TOrder {
-  user?: string;
+  user: Types.ObjectId;
   _id?: string;
 
   products: {
-    product: string;
+    product: Types.ObjectId;
     quantity: number;
   }[];
-  status: 'pending' | 'completed' | 'cancelled';
+  transaction: {
+    id: string;
+    transactionStatus: string;
+    bank_status: string;
+    sp_code: string;
+    sp_message: string;
+    method: string;
+    date_time: string;
+  };
+
+  status: 'Pending' | 'Paid' | 'Shipped' | 'Completed' | 'Cancelled';
   email: string;
   product: mongoose.Schema.Types.ObjectId;
   quantity: number;

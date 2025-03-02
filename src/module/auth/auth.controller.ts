@@ -5,6 +5,9 @@ import { AuthService } from './auth.service';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { StatusCodes } from 'http-status-codes';
+import User from '../User/user.model';
+import { TUser } from '../User/user.interface';
+import { JwtPayload } from 'jsonwebtoken';
 
 //register
 
@@ -60,8 +63,27 @@ const logout = catchAsync(async (req: Request, res: Response) => {
   res.redirect('/login'); // Redirect to login page
 });
 
+//changePassWord
+
+const changePassWord = catchAsync(async (req: Request, res: Response) => {
+  const { ...passwordData } = req.body;
+
+  const result = await AuthService.changpassword(
+    req.user as JwtPayload,
+    passwordData,
+  );
+
+  sendResponse(res, {
+    success: true,
+    message: 'Password Update successfully',
+    statusCode: StatusCodes.CREATED,
+    data: result,
+  });
+});
+
 export const AuthController = {
   register,
   login,
   logout,
+  changePassWord,
 };
