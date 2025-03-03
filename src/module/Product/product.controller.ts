@@ -28,10 +28,10 @@ const createBook = catchAsync(async (req: Request, res: Response) => {
   }
 });
 
-//Method: GET  ALL
-const getBook = async (req: Request, res: Response) => {
+//Method: GET  ALL Products
+const getProducts = async (req: Request, res: Response) => {
   try {
-    const result = await BookService.getBook();
+    const result = await BookService.getproducts(req.query);
 
     res.send({
       status: true,
@@ -121,7 +121,7 @@ const DeleteBook = async (req: Request, res: Response) => {
 
 export const productController = {
   createBook,
-  getBook,
+  getProducts,
   getSingleBook,
   UpdateBook,
   DeleteBook,

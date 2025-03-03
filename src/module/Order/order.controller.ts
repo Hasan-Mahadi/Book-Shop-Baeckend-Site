@@ -35,7 +35,6 @@ const createOrder = catchAsync(async (req: Request, res: Response) => {
     user as TUser,
     req.body,
     req.ip!,
-  
   );
 
   sendResponse(res, {

@@ -8,7 +8,7 @@ productrouter.post('/', auth('user'), productController.createBook);
 productrouter.get('/:bookId', auth('admin'), productController.getSingleBook);
 productrouter.put('/:bookId', auth('admin'), productController.UpdateBook);
 productrouter.delete('/:bookId', auth('admin'), productController.DeleteBook);
-productrouter.get('/', auth('admin'), productController.getBook);
+productrouter.get('/', auth('admin', 'user'), productController.getProducts);
 
 export default productrouter;
 
