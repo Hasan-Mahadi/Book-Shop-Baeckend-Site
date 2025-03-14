@@ -8,18 +8,31 @@ import { StatusCodes } from 'http-status-codes';
 import User from '../User/user.model';
 import { TUser } from '../User/user.interface';
 import { JwtPayload } from 'jsonwebtoken';
+import { ZodError } from 'zod';
 
 //register
 
 const register = catchAsync(async (req: Request, res: Response) => {
-  const result = await AuthService.register(req.body);
+  try {
+    const result = await AuthService.register(req.body);
 
-  sendResponse(res, {
-    success: true,
-    message: 'User registered successfully',
-    statusCode: StatusCodes.CREATED,
-    data: result,
-  });
+    sendResponse(res, {
+      success: true,
+      message: 'User registered successfully',
+      statusCode: StatusCodes.CREATED,
+      data: result,
+    });
+  } catch (error) {
+    if (error instanceof ZodError) {
+      res.status(401).json({
+        success: false,
+        message: 'Invalid credentials',
+        statusCode: 401,
+        error: error.message,
+        stack: error.stack,
+      });
+    }
+  }
 });
 
 //login

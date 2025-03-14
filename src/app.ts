@@ -3,6 +3,8 @@ import cors from 'cors';
 import productrouter from './module/Product/product.router';
 import orderRouter from './module/Order/order.router';
 import Order from './module/Order/order.model';
+// import cookieParser from 'cookie-parser';
+
 import userRouter from './module/User/user.router';
 import authRoute from './module/auth/auth.router';
 const app: Application = express();
@@ -12,7 +14,15 @@ const app: Application = express();
 //parsers
 
 app.use(express.json());
-app.use(cors());
+// app.use(cookieParser());
+// app.use(cors({origin: 'http://localhost:5173',}));
+const corsOptions = {
+  origin: 'http://localhost:5173', // Your front-end URL
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow the Authorization header
+};
+
+app.use(cors(corsOptions));
 
 app.use('/api/products', productrouter);
 app.use('/api/orders', orderRouter);
