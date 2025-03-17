@@ -19,7 +19,8 @@ app.use(express.json());
 const corsOptions = {
   origin: 'http://localhost:5173', // Your front-end URL
   methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allow the Authorization header
+  credentials: true,
+  // allowedHeaders: ['Content-Type', 'Authorization'], // Allow the Authorization header
 };
 
 app.use(cors(corsOptions));

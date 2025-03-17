@@ -4,7 +4,7 @@ import auth from '../../middleweres/auth';
 
 const productrouter = Router();
 
-productrouter.post('/', auth('user'), productController.createBook);
+productrouter.post('/', auth('user', 'admin'), productController.createBook);
 productrouter.get('/:bookId', auth('admin'), productController.getSingleBook);
 productrouter.put('/:bookId', auth('admin'), productController.UpdateBook);
 productrouter.delete('/:bookId', auth('admin'), productController.DeleteBook);

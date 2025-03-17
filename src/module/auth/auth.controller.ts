@@ -76,6 +76,7 @@ const logout = catchAsync(async (req: Request, res: Response) => {
   res.redirect('/login'); // Redirect to login page
 });
 
+
 //changePassWord
 
 const changePassWord = catchAsync(async (req: Request, res: Response) => {
