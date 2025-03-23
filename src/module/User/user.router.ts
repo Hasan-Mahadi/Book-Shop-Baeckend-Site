@@ -8,7 +8,7 @@ const userRouter = Router();
 userRouter.post('/', UserController.creatUser);
 userRouter.put('/:userId', UserController.UpdateUser);
 userRouter.delete('/:userId', auth('admin'), UserController.DeleteUser);
-userRouter.get('/', auth('admin'), UserController.getUser);
+userRouter.get('/all', auth('admin'), UserController.getUser);
 userRouter.patch(
   '/:userId/deactivate',
   auth('admin'),

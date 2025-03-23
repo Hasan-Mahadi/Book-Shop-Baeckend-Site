@@ -16,7 +16,7 @@ const register = catchAsync(async (req: Request, res: Response) => {
   try {
     const result = await AuthService.register(req.body);
 
-    sendResponse(res, {
+  return  sendResponse(res, {
       success: true,
       message: 'User registered successfully',
       statusCode: StatusCodes.CREATED,
@@ -42,7 +42,7 @@ const login = catchAsync(
     try {
       const result = await AuthService.login(req.body);
 
-      sendResponse(res, {
+    return  sendResponse(res, {
         success: true,
         message: 'Login successful',
         statusCode: StatusCodes.OK,
@@ -67,7 +67,7 @@ const login = catchAsync(
 const logout = catchAsync(async (req: Request, res: Response) => {
   res.clearCookie('token'); // Clear token from cookies if stored there
 
-  sendResponse(res, {
+ return sendResponse(res, {
     success: true,
     message: 'Logout successful',
     statusCode: StatusCodes.OK,
@@ -87,7 +87,7 @@ const changePassWord = catchAsync(async (req: Request, res: Response) => {
     passwordData,
   );
 
-  sendResponse(res, {
+ return sendResponse(res, {
     success: true,
     message: 'Password Update successfully',
     statusCode: StatusCodes.CREATED,
