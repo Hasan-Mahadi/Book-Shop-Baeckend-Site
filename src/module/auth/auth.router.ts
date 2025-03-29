@@ -38,7 +38,7 @@ authRoute.post(
 );
 
 // Example: Get User Info from Token
-authRoute.get('/profile', auth('admin'), (req, res) => {
+authRoute.get('/profile', auth('admin', 'user'), (req, res) => {
   const user = req.user; // Assuming the token is verified and user data is stored
   res.json(user);
 });

@@ -2,7 +2,6 @@
 import { TUser } from './user.interface';
 import { User } from './user.model';
 
-
 // Method:POST
 const createUser = async (payload: TUser): Promise<TUser> => {
   payload.role = 'admin';
@@ -37,35 +36,29 @@ const getUser = async () => {
 //deActive-User
 
 // const deactivateUsers = async (userId: string) => {
-  // return await User.findByIdAndUpdate(
-    // userId,
-    // { isBlocked: true },
-    // { new: true },
-  // );
+// return await User.findByIdAndUpdate(
+// userId,
+// { isBlocked: true },
+// { new: true },
+// );
 // };
-// 
+//
 // Example: Backend code
 
 // Ensure that the deactivateUsers function only expects a userId
 const deactivateUsers = async (userId: string): Promise<any> => {
   try {
-    const user = await User.findByIdAndUpdate(userId, { isBlocked: true }, { new: true });
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { isBlocked: true },
+      { new: true },
+    );
     return user; // Return the updated user
   } catch (error) {
-    console.log(error)
+    console.log(error);
     throw new Error('Failed to deactivate user');
   }
 };
-
-
-
-
-
-
-
-
-
-
 
 export const userService = {
   createUser,

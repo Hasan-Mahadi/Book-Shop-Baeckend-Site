@@ -6,17 +6,19 @@ const productSchema = new Schema<TProduct>(
     name: { type: String, required: true },
     brand: { type: String, required: true },
     model: { type: String, required: true },
+    rating: { type: Number },
     stock: { type: Number, required: true },
+    image: { type: String, required: true }, // Image field added
 
     author: {
       type: String,
       required: [true, 'please give author'],
-    }, //The author of the book.
+    },
 
     price: {
       type: Number,
       required: [true, 'please give price number'],
-    }, // Price of the book.
+    },
 
     category: {
       type: String,
@@ -29,24 +31,18 @@ const productSchema = new Schema<TProduct>(
           'Religious',
         ],
         message: '{VALUE} is not right plz provide exact value',
-      }, // Enum validation
-      required: [true, 'please give category'], // Ensures category is always provided
+      },
+      required: [true, 'please give category'],
     },
-    // error:String,
 
-    //The genre or category of the book.
-
-    description: String, // A brief description of the book.
+    description: String,
 
     quantity: {
       type: Number,
       required: [true, 'please give quantity number'],
-    }, //Quantity of the book available.
+    },
 
-    inStock: Boolean, //Indicates if the book is in stock.
-
-    // createdAt: { type: Date, default: Date.now },
-    // updatedAt: { type: Date, default: Date.now },
+    inStock: Boolean,
   },
   {
     timestamps: true,

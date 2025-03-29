@@ -8,6 +8,13 @@ const createBook = catchAsync(async (req: Request, res: Response) => {
   try {
     const bookload = req.body;
 
+    if (!bookload.image) {
+      res.status(400).json({
+        success: false,
+        message: 'Image is required',
+      });
+    }
+
     const result = await BookService.createBook(bookload);
     res.json({
       message: 'Book created successfully',
