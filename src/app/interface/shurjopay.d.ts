@@ -8,7 +8,8 @@ declare module 'shurjopay' {
     merchant_username: string;
     merchant_password: string;
     merchant_key_prefix: string;
-    return_url: string;
+     return_url: string;
+    client_url:string;
 
     readonly token_url: string;
     readonly verification_url: string;
@@ -26,6 +27,7 @@ declare module 'shurjopay' {
     prefix: string; // Provided by the shurjoPay team (Mandatory)
     token: string; // Alphanumeric token for communication with shurjoPay (Mandatory)
     return_url: string; // URL to redirect customer after payment processing (Mandatory)
+    client_url:string;
     cancel_url: string; // URL to redirect customer after payment cancellation (Mandatory)
     store_id: string; // Store ID provided by generate token API response (Mandatory)
     amount: number; // Amount the customer is paying (Mandatory)
@@ -115,7 +117,8 @@ declare module 'shurjopay' {
       merchant_username: string,
       merchant_password: string,
       merchant_key_prefix: string,
-      return_url: string,
+      //  return_url: string,
+      client_url:string,
     ): void;
 
     randomString(length: number): string;

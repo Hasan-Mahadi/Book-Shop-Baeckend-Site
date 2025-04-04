@@ -1,15 +1,15 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import mongoose, { model, Schema } from 'mongoose';
 import { TOrder } from './order.interface';
 
 const orderSchema = new Schema<TOrder>(
   {
-    // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     user: {
       type: Schema.Types.ObjectId,
-      ref: 'Product',
+      ref: 'User', // Fixed to reference User
       required: true,
     },
-
     products: [
       {
         product: {
@@ -23,39 +23,29 @@ const orderSchema = new Schema<TOrder>(
         },
       },
     ],
-
     status: {
       type: String,
-      enum: ['Pending', 'Paid', 'Shipped', 'Completed', 'Cancelled'],
+      enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled', 'Failed'],
       default: 'Pending',
     },
-
-    //
-    // email: {
-    // type: String,
-    // required: [true, 'please enter email'],
-    // },
-    // product: {
-    // type: mongoose.Schema.Types.ObjectId,
-    //  ref: 'Product', // References the 'Product' model
-    // required: true,
-    // },
-
-    quantity: {
-      type: Number,
-      required: [true, 'please enter quantity'],
-      default: 1,
+    shippingAddress: {
+      type: String,
+      required: true,
     },
-
-    items: {
-      bookId: mongoose.Schema.Types.ObjectId,
-      totalPrice: Number, // Price of the book
-      quantity: Number, // Quantity ordered
+    phoneNumber: {
+      type: String,
+      required: true,
+    },
+    paymentMethod: {
+      type: String,
+      required: true,
+      enum: ['shurjopay', 'cashOnDelivery'],
     },
     totalPrice: {
       type: Number,
       required: true,
     },
+    
     transaction: {
       id: String,
       transactionStatus: String,
@@ -65,10 +55,15 @@ const orderSchema = new Schema<TOrder>(
       method: String,
       date_time: String,
     },
-
-    // createdAt: { type: Date, default: Date.now },
-    // updatedAt: { type: Date, default: Date.now },
+     shurjopayOrderId: {  // Add this field
+    type: String,
+    unique: true
+  }
   },
+ 
+
+ 
+ 
   {
     timestamps: true,
   },

@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
 // export type TUser = {
 // _id?: string;
@@ -9,7 +11,10 @@
 // matchPassword:string
 // };
 
+import { ObjectId } from "mongoose";
+
 export interface TUser {
+  _id: any | ObjectId;
   // _id?: string;
   name: string;
   email: string;

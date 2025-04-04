@@ -9,8 +9,13 @@ shurjopay.config(
   config.sp.sp_username!,
   config.sp.sp_password!,
   config.sp.sp_prefix!,
-  config.sp.sp_return_url!,
+  // config.sp.sp_return_url!,
+   `${config.client_url}/payment-success` // Your frontend success URL
 );
+
+
+ 
+ 
 
 // console.log(shurjopay);
 

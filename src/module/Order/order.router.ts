@@ -12,6 +12,7 @@ orderRouter.get(
   OrderController.getSingleOrder,
 );
 orderRouter.get('/', auth('admin', 'user'), OrderController.verifyPayment);
+orderRouter.post('/verify-payment', OrderController.verifyPayment);
 orderRouter.put('/:bookId', auth('admin'), OrderController.UpdateOrder);
 orderRouter.delete('/:bookId', auth('admin'), OrderController.DeleteOrder);
 

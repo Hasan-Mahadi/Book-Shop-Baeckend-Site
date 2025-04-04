@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import AppError from '../../app/errors/AppError';
 import Product from '../Product/Product.model';
 import { TUser } from '../User/user.interface';
@@ -13,59 +15,156 @@ import { StatusCodes } from 'http-status-codes';
 // return result;
 // };
 
+// const createOrder = async (
+  // user: TUser,
+  // payload: { products: { product: string; quantity: number }[] },
+  // client_ip: string,
+// ) => {
+  // if (!payload?.products?.length)
+    // throw new AppError(StatusCodes.NOT_ACCEPTABLE, 'Order is not specified');
+// 
+  // const products = payload.products;
+// 
+  // let totalPrice = 0;
+  // const productDetails = await Promise.all(
+    // products.map(async (item) => {
+      // const product = await Product.findById(item.product);
+      // if (product) {
+        // const subtotal = product ? (product.price || 0) * item.quantity : 0;
+        // totalPrice += subtotal;
+        // return item;
+      // }
+    // }),
+  // );
+// 
+  // let order = await Order.create({
+    // user,
+    // products: productDetails,
+    // totalPrice,
+  // });
+// 
+  // payment integration
+  // const shurjopayPayload = {
+    // amount: totalPrice,
+    // order_id: order._id,
+    // currency: 'BDT',
+    // customer_name: user.name,
+    // customer_address: user.address,
+    // customer_email: user.email,
+    // customer_phone: user.phone,
+    // customer_city: user.city,
+    // client_ip,
+  // };
+// 
+  // const payment = await orderUtils.makePaymentAsync(shurjopayPayload);
+// 
+  // if (payment?.transactionStatus) {
+    // order = await order.updateOne({
+      // transaction: {
+        // id: payment.sp_order_id,
+        // transactionStatus: payment.transactionStatus,
+      // },
+    // });
+  // }
+// 
+  // return payment.checkout_url;
+// };
+
+
+
+
 const createOrder = async (
   user: TUser,
-  payload: { products: { product: string; quantity: number }[] },
+  payload: { 
+    products: { product: string; quantity: number }[],
+    paymentMethod: string,
+    shippingAddress: string,
+    phoneNumber: string
+  },
   client_ip: string,
 ) => {
-  if (!payload?.products?.length)
+  if (!payload?.products?.length) {
     throw new AppError(StatusCodes.NOT_ACCEPTABLE, 'Order is not specified');
+  }
 
   const products = payload.products;
 
+  // Calculate total price and verify products
   let totalPrice = 0;
   const productDetails = await Promise.all(
     products.map(async (item) => {
       const product = await Product.findById(item.product);
-      if (product) {
-        const subtotal = product ? (product.price || 0) * item.quantity : 0;
-        totalPrice += subtotal;
-        return item;
+      if (!product) {
+        throw new AppError(StatusCodes.NOT_FOUND, `Product not found: ${item.product}`);
       }
+      if (item.quantity > product.stock) {
+        throw new AppError(StatusCodes.BAD_REQUEST, `Insufficient stock for product: ${product.name}`);
+      }
+      
+      const subtotal = product.price * item.quantity;
+      totalPrice += subtotal;
+      
+      return {
+        product: product._id,
+        quantity: item.quantity
+      };
     }),
   );
 
-  let order = await Order.create({
-    user,
+
+  
+  // Create the order
+  const order = await Order.create({
+    user: user._id,
     products: productDetails,
     totalPrice,
+    status: 'Pending',
+    shippingAddress: payload.shippingAddress,
+    phoneNumber: payload.phoneNumber,
+    paymentMethod: payload.paymentMethod
   });
 
-  // payment integration
-  const shurjopayPayload = {
-    amount: totalPrice,
-    order_id: order._id,
-    currency: 'BDT',
-    customer_name: user.name,
-    customer_address: user.address,
-    customer_email: user.email,
-    customer_phone: user.phone,
-    customer_city: user.city,
-    client_ip,
-  };
-
-  const payment = await orderUtils.makePaymentAsync(shurjopayPayload);
-
-  if (payment?.transactionStatus) {
-    order = await order.updateOne({
-      transaction: {
-        id: payment.sp_order_id,
-        transactionStatus: payment.transactionStatus,
-      },
-    });
+  // If payment method is cash on delivery, return order directly
+  if (payload.paymentMethod === 'cashOnDelivery') {
+    return { order };
   }
 
-  return payment.checkout_url;
+  // ShurjoPay integration for online payment
+  const shurjopayPayload = {
+    amount: totalPrice,
+    order_id: order._id.toString(),
+    currency: 'BDT',
+    customer_name: user.name,
+    customer_address: payload.shippingAddress || user.address,
+    customer_email: user.email,
+    customer_phone: payload.phoneNumber || user.phone,
+    customer_city: user.city || 'Dhaka',
+    client_ip: client_ip,
+  };
+
+  try {
+    const payment = await orderUtils.makePaymentAsync(shurjopayPayload);
+    
+    if (payment?.checkout_url) {
+      // Update order with payment info
+      await Order.findByIdAndUpdate(order._id, {
+        $set: {
+          transaction: {
+            id: payment.sp_order_id,
+            transactionStatus: payment.transactionStatus,
+          }
+        }
+      });
+      
+      return { checkout_url: payment.checkout_url };
+    }
+    
+    throw new AppError(StatusCodes.BAD_GATEWAY, 'Failed to initiate payment');
+  } catch (error) {
+    // If payment fails, update order status
+    await Order.findByIdAndUpdate(order._id, { status: 'Failed' });
+    throw new AppError(StatusCodes.BAD_GATEWAY, 'Payment gateway error');
+  }
 };
 
 // for GET ALL
@@ -121,6 +220,7 @@ const UpdateOrder = async (id: string, data: TOrder) => {
 
   return result;
 };
+
 
 // for  DELETE
 
