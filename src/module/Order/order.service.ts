@@ -221,7 +221,6 @@ const UpdateOrder = async (id: string, data: TOrder) => {
   return result;
 };
 
-
 // for  DELETE
 
 const DeleteOrder = async (id: string) => {

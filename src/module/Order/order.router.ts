@@ -7,13 +7,13 @@ const orderRouter = Router();
 orderRouter.post('/', auth('admin', 'user'), OrderController.createOrder);
 orderRouter.get('/', auth('admin', 'user'), OrderController.getOrder);
 orderRouter.get(
-  '/:bookId',
+  '/:id',
   auth('admin', 'user'),
   OrderController.getSingleOrder,
 );
 orderRouter.get('/', auth('admin', 'user'), OrderController.verifyPayment);
 orderRouter.post('/verify-payment', OrderController.verifyPayment);
-orderRouter.put('/:bookId', auth('admin'), OrderController.UpdateOrder);
+orderRouter.patch('/:id', auth('admin'), OrderController.UpdateOrder);
 orderRouter.delete('/:bookId', auth('admin'), OrderController.DeleteOrder);
 
 export default orderRouter;
