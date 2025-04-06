@@ -6,11 +6,7 @@ const orderRouter = Router();
 
 orderRouter.post('/', auth('admin', 'user'), OrderController.createOrder);
 orderRouter.get('/', auth('admin', 'user'), OrderController.getOrder);
-orderRouter.get(
-  '/:id',
-  auth('admin', 'user'),
-  OrderController.getSingleOrder,
-);
+orderRouter.get('/:id', auth('admin', 'user'), OrderController.getSingleOrder);
 orderRouter.get('/', auth('admin', 'user'), OrderController.verifyPayment);
 orderRouter.post('/verify-payment', OrderController.verifyPayment);
 orderRouter.patch('/:id', auth('admin'), OrderController.UpdateOrder);

@@ -11,7 +11,7 @@
 // matchPassword:string
 // };
 
-import { ObjectId } from "mongoose";
+import { ObjectId } from 'mongoose';
 
 export interface TUser {
   _id: any | ObjectId;

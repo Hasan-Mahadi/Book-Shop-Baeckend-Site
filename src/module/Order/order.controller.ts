@@ -72,24 +72,23 @@ const getOrder = async (req: Request, res: Response) => {
 //payment
 
 // const verifyPayment = catchAsync(async (req, res) => {
-  // const order = await OrderService.verifyPayment(req.query.order_id as string);
-// 
-  // sendResponse(res, {
-    // statusCode: StatusCodes.CREATED,
-    // message: 'Order verified successfully',
-    // data: order,
-    // success: true,
-  // });
+// const order = await OrderService.verifyPayment(req.query.order_id as string);
+//
+// sendResponse(res, {
+// statusCode: StatusCodes.CREATED,
+// message: 'Order verified successfully',
+// data: order,
+// success: true,
 // });
-// 
-// 
-
+// });
+//
+//
 
 // order.controller.ts
 const verifyPayment = catchAsync(async (req: Request, res: Response) => {
   const { orderId } = req.body;
   const result = await OrderService.verifyPayment(orderId);
-  
+
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
@@ -101,50 +100,46 @@ const verifyPayment = catchAsync(async (req: Request, res: Response) => {
 //Method: GET   SINGLE
 
 // const getSingleOrder = async (req: Request, res: Response) => {
-  // try {
-    // const bookId = req.params.bookId;
-    // const result = await OrderService.getSingleOrder(bookId);
-// 
-    // res.send({
-      // status: true,
-      // message: 'Books retrieved successfully',
-      // result,
-    // });
-  // } catch (error) {
-    // res.json({
-      // status: false,
-      // message: 'Something went wrong',
-      // stack:
-        // process.env.NODE_ENV === 'development' ? (error as Error) : undefined,
-      // error,
-    // });
-  // }
+// try {
+// const bookId = req.params.bookId;
+// const result = await OrderService.getSingleOrder(bookId);
+//
+// res.send({
+// status: true,
+// message: 'Books retrieved successfully',
+// result,
+// });
+// } catch (error) {
+// res.json({
+// status: false,
+// message: 'Something went wrong',
+// stack:
+// process.env.NODE_ENV === 'development' ? (error as Error) : undefined,
+// error,
+// });
+// }
 // };
-
 
 // order.controller.ts
 // const getSingleOrder = catchAsync(async (req: Request, res: Response) => {
-  // const order = await Order.findOne({ 
-    // $or: [
-      // { _id: req.params.id },
-      // { shurjopayOrderId: req.params.id }
-    // ]
-  // }).populate('user products.product');
-// 
-  // if (!order) {
-    // throw new AppError(StatusCodes.NOT_FOUND, 'Order not found');
-  // }
-// 
-  // sendResponse(res, {
-    // statusCode: StatusCodes.OK,
-    // success: true,
-    // message: 'Order retrieved successfully',
-    // data: order,
-  // });
+// const order = await Order.findOne({
+// $or: [
+// { _id: req.params.id },
+// { shurjopayOrderId: req.params.id }
+// ]
+// }).populate('user products.product');
+//
+// if (!order) {
+// throw new AppError(StatusCodes.NOT_FOUND, 'Order not found');
+// }
+//
+// sendResponse(res, {
+// statusCode: StatusCodes.OK,
+// success: true,
+// message: 'Order retrieved successfully',
+// data: order,
 // });
-
-
-
+// });
 
 import mongoose from 'mongoose';
 
@@ -157,11 +152,8 @@ const getSingleOrder = catchAsync(async (req: Request, res: Response) => {
     order = await Order.findById(id).populate('user products.product');
   } else {
     // Handle ShurjoPay ID case
-    order = await Order.findOne({ 
-      $or: [
-        { 'transaction.id': id },
-        { shurjopayOrderId: id }
-      ]
+    order = await Order.findOne({
+      $or: [{ 'transaction.id': id }, { shurjopayOrderId: id }],
     }).populate('user products.product');
   }
 

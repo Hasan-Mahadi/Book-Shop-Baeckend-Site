@@ -25,7 +25,14 @@ const orderSchema = new Schema<TOrder>(
     ],
     status: {
       type: String,
-      enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled', 'Failed'],
+      enum: [
+        'Pending',
+        'Processing',
+        'Shipped',
+        'Delivered',
+        'Cancelled',
+        'Failed',
+      ],
       default: 'Pending',
     },
     shippingAddress: {
@@ -45,7 +52,7 @@ const orderSchema = new Schema<TOrder>(
       type: Number,
       required: true,
     },
-    
+
     transaction: {
       id: String,
       transactionStatus: String,
@@ -55,15 +62,13 @@ const orderSchema = new Schema<TOrder>(
       method: String,
       date_time: String,
     },
-     shurjopayOrderId: {  // Add this field
-    type: String,
-    unique: true
-  }
+    shurjopayOrderId: {
+      // Add this field
+      type: String,
+      unique: true,
+    },
   },
- 
 
- 
- 
   {
     timestamps: true,
   },
