@@ -5,11 +5,8 @@ import { AuthController } from './auth.controller';
 import { AuthValidation } from './auth.validation';
 import auth from '../../middleweres/auth';
 
-// import { AuthController } from './auth.controller';
-// import validateRequest from '../../middlewares/validateRequest';
-// import { UserValidation } from '../User/user.validation';
-// import { AuthValidation } from './auth.validation';
-//
+
+
 const authRoute = Router();
 
 authRoute.post(
