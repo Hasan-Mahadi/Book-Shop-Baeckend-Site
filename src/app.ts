@@ -17,7 +17,7 @@ app.use(express.json());
 // app.use(cookieParser());
 // app.use(cors({origin: 'http://localhost:5173',}));
 const corsOptions = {
-  origin: 'http://localhost:5173', // Your front-end URL
+  origin: 'https://book-shop-app-five.vercel.app', //front url
   methods: 'GET,POST,PUT,DELETE,PATCH',
   credentials: true,
   // allowedHeaders: ['Content-Type', 'Authorization'], // Allow the Authorization header
