@@ -13,8 +13,8 @@ BookVerse is a full-stack e-commerce platform for book enthusiasts, featuring:
 
 ## 🚀 Live Demos
 
-**Frontend**: [https://book-shop-assignment-2.vercel.app](https://book-shop-assignment-2.vercel.app)  
-**Backend API**: [http://localhost:5000](http://localhost:5000)
+**Frontend**: [https://book-shop-app-five.vercel.app](https://book-shop-app-five.vercel.app)  
+**Backend API**: [https://bookshop-app-two.vercel.app/api](https://bookshop-app-two.vercel.app/api)
 
 ## 🛠️ Technology Stack
 
