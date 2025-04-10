@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import AppError from '../../app/errors/AppError';
@@ -8,8 +9,108 @@ import Order from './order.model';
 import { orderUtils } from './order.utils';
 import { StatusCodes } from 'http-status-codes';
 
-
 //post
+
+// const createOrder = async (
+// user: TUser,
+// payload: {
+// products: { product: string; quantity: number }[];
+// paymentMethod: string;
+// shippingAddress: string;
+// phoneNumber: string;
+// },
+// client_ip: string,
+// ) => {
+// if (!payload?.products?.length) {
+// throw new AppError(StatusCodes.NOT_ACCEPTABLE, 'Order is not specified');
+// }
+//
+// const products = payload.products;
+//
+// Calculate total price and verify products
+// let totalPrice = 0;
+// const productDetails = await Promise.all(
+// products.map(async (item) => {
+// const product = await Product.findById(item.product);
+// if (!product) {
+// throw new AppError(
+// StatusCodes.NOT_FOUND,
+// `Product not found: ${item.product}`,
+// );
+// }
+// if (item.quantity > product.stock) {
+// throw new AppError(
+// StatusCodes.BAD_REQUEST,
+// `Insufficient stock for product: ${product.name}`,
+// );
+// }
+//
+// const subtotal = product.price * item.quantity;
+// totalPrice += subtotal;
+//
+// return {
+// product: product._id,
+// quantity: item.quantity,
+// };
+// }),
+// );
+//
+// Create the order
+// const order = await Order.create({
+// user: user._id,
+// products: productDetails,
+// totalPrice,
+// status: 'Pending',
+// shippingAddress: payload.shippingAddress,
+// phoneNumber: payload.phoneNumber,
+// paymentMethod: payload.paymentMethod,
+// });
+// if (payload.paymentMethod === 'shurjopay') {
+// order.shurjopayOrderId = `SP_${Date.now()}`;
+// }
+// If payment method is cash on delivery, return order directly
+// if (payload.paymentMethod === 'cashOnDelivery') {
+// return { order };
+// }
+//
+// ShurjoPay integration for online payment
+// const shurjopayPayload = {
+// amount: totalPrice,
+// order_id: order._id.toString(),
+// currency: 'BDT',
+// customer_name: user.name,
+// customer_address: payload.shippingAddress || user.address,
+// customer_email: user.email,
+// customer_phone: payload.phoneNumber || user.phone,
+// customer_city: user.city || 'Dhaka',
+// client_ip: client_ip,
+// };
+//
+// try {
+// const payment = await orderUtils.makePaymentAsync(shurjopayPayload);
+//
+// if (payment?.checkout_url) {
+// Update order with payment info
+// await Order.findByIdAndUpdate(order._id, {
+// $set: {
+// transaction: {
+// id: payment.sp_order_id,
+// transactionStatus: payment.transactionStatus,
+// },
+// },
+// });
+//
+// return { checkout_url: payment.checkout_url };
+// }
+//
+// throw new AppError(StatusCodes.BAD_GATEWAY, 'Failed to initiate payment');
+// } catch (error) {
+// If payment fails, update order status
+// await Order.findByIdAndUpdate(order._id, { status: 'Failed' });
+// throw new AppError(StatusCodes.BAD_GATEWAY, 'Payment gateway error');
+// }
+// };
+//
 
 const createOrder = async (
   user: TUser,
@@ -45,8 +146,7 @@ const createOrder = async (
         );
       }
 
-      const subtotal = product.price * item.quantity;
-      totalPrice += subtotal;
+      totalPrice += product.price * item.quantity;
 
       return {
         product: product._id,
@@ -55,8 +155,8 @@ const createOrder = async (
     }),
   );
 
-  // Create the order
-  const order = await Order.create({
+  // Prepare order payload
+  const orderPayload: any = {
     user: user._id,
     products: productDetails,
     totalPrice,
@@ -64,31 +164,36 @@ const createOrder = async (
     shippingAddress: payload.shippingAddress,
     phoneNumber: payload.phoneNumber,
     paymentMethod: payload.paymentMethod,
-  });
+  };
 
-  // If payment method is cash on delivery, return order directly
+  // Generate unique shurjopayOrderId only if payment method is shurjopay
+  if (payload.paymentMethod === 'shurjopay') {
+    orderPayload.shurjopayOrderId = `SP_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
+  }
+
+  const order = await Order.create(orderPayload);
+
   if (payload.paymentMethod === 'cashOnDelivery') {
     return { order };
   }
 
-  // ShurjoPay integration for online payment
+  // ShurjoPay integration
   const shurjopayPayload = {
     amount: totalPrice,
-    order_id: order._id.toString(),
+    order_id: order.shurjopayOrderId || order._id.toString(),
     currency: 'BDT',
     customer_name: user.name,
     customer_address: payload.shippingAddress || user.address,
     customer_email: user.email,
     customer_phone: payload.phoneNumber || user.phone,
     customer_city: user.city || 'Dhaka',
-    client_ip: client_ip,
+    client_ip,
   };
 
   try {
     const payment = await orderUtils.makePaymentAsync(shurjopayPayload);
 
     if (payment?.checkout_url) {
-      // Update order with payment info
       await Order.findByIdAndUpdate(order._id, {
         $set: {
           transaction: {
@@ -103,7 +208,6 @@ const createOrder = async (
 
     throw new AppError(StatusCodes.BAD_GATEWAY, 'Failed to initiate payment');
   } catch (error) {
-    // If payment fails, update order status
     await Order.findByIdAndUpdate(order._id, { status: 'Failed' });
     throw new AppError(StatusCodes.BAD_GATEWAY, 'Payment gateway error');
   }

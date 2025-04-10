@@ -7,9 +7,6 @@ import { TUser } from '../User/user.interface';
 import Order from './order.model';
 import AppError from '../../app/errors/AppError';
 
-
-
-
 const createOrder = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
 
@@ -64,7 +61,6 @@ const verifyPayment = catchAsync(async (req: Request, res: Response) => {
 });
 
 //Method: GET   SINGLE
-
 
 import mongoose from 'mongoose';
 

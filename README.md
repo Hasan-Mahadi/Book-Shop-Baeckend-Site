@@ -1,11 +1,9 @@
-#  📚 Book-Shop-Backend-Site  - Modern E-Commerce Bookstore Platform
-
-
-![BookVerse Architecture](https://via.placeholder.com/1500x500/2563eb/ffffff?text=BookVerse+Full-Stack+Solution)
+# 📚 Book-Shop-Backend-Site - Modern E-Commerce Bookstore Platform
 
 ## 🌟 Project Overview
 
 BookVerse is a full-stack e-commerce platform for book enthusiasts, featuring:
+
 - Robust backend with Express.js and TypeScript
 - MongoDB database with Mongoose ODM
 - Modern frontend with React, Redux, and TailwindCSS
@@ -21,24 +19,25 @@ BookVerse is a full-stack e-commerce platform for book enthusiasts, featuring:
 ## 🛠️ Technology Stack
 
 ### Backend Services
-| Technology | Purpose | Version |
-|------------|---------|---------|
-| ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) | Runtime Environment | 18+ |
-| ![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white) | Web Framework | 4.x |
-| ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white) | Type Safety | 4.9+ |
-| ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white) | Database | 6.0+ |
+
+| Technology                                                                                                        | Purpose             | Version |
+| ----------------------------------------------------------------------------------------------------------------- | ------------------- | ------- |
+| ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)        | Runtime Environment | 18+     |
+| ![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)       | Web Framework       | 4.x     |
+| ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white) | Type Safety         | 4.9+    |
+| ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)          | Database            | 6.0+    |
 
 ### Frontend Application
-| Technology | Purpose | Version |
-|------------|---------|---------|
-| ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) | UI Framework | 19.0.0 |
-| ![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white) | State Management | 4.2.0 |
-| ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white) | CSS Framework | 3.3.0 |
+
+| Technology                                                                                                             | Purpose          | Version |
+| ---------------------------------------------------------------------------------------------------------------------- | ---------------- | ------- |
+| ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)                    | UI Framework     | 19.0.0  |
+| ![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)                     | State Management | 4.2.0   |
+| ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white) | CSS Framework    | 3.3.0   |
 
 ## 🏗️ Project Structure
 
 ### Backend Architecture (Feature-Based Modular Pattern)
-
 
 src/
 ├── features/
@@ -67,6 +66,7 @@ src/
 Copy
 
 ### Frontend Architecture
+
 src/
 ├── features/
 │ ├── auth/ # Authentication components
@@ -84,6 +84,7 @@ src/
 ### Backend Setup
 
 1. **Install dependencies**
+
 ```bash
 npm install express mongoose cors dotenv body-parser
 npm install --save-dev typescript ts-node-dev @types/express @types/cors
@@ -178,7 +179,7 @@ erDiagram
         date createdAt
         date updatedAt
     }
-    
+
     PRODUCT ||--o{ ORDER_ITEM : included_in
     PRODUCT {
         string _id PK
@@ -192,7 +193,7 @@ erDiagram
         date createdAt
         date updatedAt
     }
-    
+
     ORDER ||--o{ ORDER_ITEM : contains
     ORDER {
         string _id PK
@@ -203,7 +204,7 @@ erDiagram
         date createdAt
         date updatedAt
     }
-    
+
     ORDER_ITEM {
         string _id PK
         string order FK
@@ -232,3 +233,4 @@ Open a Pull Request
 Project Lead: [Hasan Mahadi]
 Email: hasanmahadihm99@gmail.com
 GitHub: Hasan-Mahadi
+```

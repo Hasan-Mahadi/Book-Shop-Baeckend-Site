@@ -63,9 +63,10 @@ const orderSchema = new Schema<TOrder>(
       date_time: String,
     },
     shurjopayOrderId: {
-      // Add this field
       type: String,
       unique: true,
+      sparse: true,
+      default: undefined,
     },
   },
 
