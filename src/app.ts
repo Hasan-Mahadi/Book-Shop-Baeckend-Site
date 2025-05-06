@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import productrouter from './module/Product/product.router';
@@ -16,11 +17,31 @@ const app: Application = express();
 app.use(express.json());
 // app.use(cookieParser());
 // app.use(cors({origin: 'http://localhost:5173',}));
+// const corsOptions = {
+  // origin: 'https://book-shop-app-five.vercel.app', //front url
+  // origin:'http://localhost:5173',
+  // origin: ['http://localhost:5173', 'https://book-shop-app-five.vercel.app'],
+  // origin: '*',
+
+  // methods: 'GET,POST,PUT,DELETE,PATCH',
+  // credentials: true,
+  // allowedHeaders: ['Content-Type', 'Authorization'], // Allow the Authorization header
+// };
+
+
+
+const allowedOrigins = ['http://localhost:5173', 'https://book-shop-app-five.vercel.app'];
+
 const corsOptions = {
-  origin: 'https://book-shop-app-five.vercel.app', //front url
+  origin: (origin: string | undefined, callback: any) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: 'GET,POST,PUT,DELETE,PATCH',
   credentials: true,
-  // allowedHeaders: ['Content-Type', 'Authorization'], // Allow the Authorization header
 };
 
 app.use(cors(corsOptions));
