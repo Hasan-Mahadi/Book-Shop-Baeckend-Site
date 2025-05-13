@@ -5,11 +5,7 @@ import auth from '../../middleweres/auth';
 const productrouter = Router();
 
 productrouter.post('/', auth('admin'), productController.createBook);
-productrouter.get(
-  '/:bookId',
-  auth('admin', 'user'),
-  productController.getSingleBook,
-);
+productrouter.get('/:bookId', productController.getSingleBook);
 productrouter.put('/:bookId', productController.UpdateBook);
 productrouter.delete('/:bookId', auth('admin'), productController.DeleteBook);
 productrouter.get('/', productController.getProducts);
